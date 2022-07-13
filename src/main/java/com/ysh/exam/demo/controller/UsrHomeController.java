@@ -1,48 +1,162 @@
 package com.ysh.exam.demo.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
 @Controller
 public class UsrHomeController {
 	
-	private int count; //UserHomeController가 살아있는 동안 값을 저장 하여 변화를 주고 싶다면 전역 변수로 지정
-	//별다른 이유가 없으면 무조건 private를 붙여야 한다.
 	
-	//생성자를 만들어 초기화 해주는 것이 좋은 방법 (바로 초기화 해도 되지만)
-	public UsrHomeController() {
-		count = -1;
-	}
-	
-	
-	
-	
-	
-	@RequestMapping("/usr/home/getCount")
+	@RequestMapping("/usr/home/getString")
 	@ResponseBody
-	public int getCount() {
-		//int count = 0;  지역 변수의 값은 저장이 되지 않기 때문에 전역 변수로 만들어 주어야 한다.
-		return count;
+	public String getString() {
+		return "Hi";
 	}
 	
 	
-	
-	@RequestMapping("/usr/home/doSetCount")
+	@RequestMapping("/usr/home/getInt")
 	@ResponseBody
-	public String doSetCount(int count) {
-		this.count = count;
-		return "count의 값이" + this.count + "초기화 되었습니다.";
+	public int getInt() {
+		return 10;
 	}
-	//위의 코드는 new UsrHomeController().doSetCount(10)와 유사한 개념
-	//부라우저 에서 url뒤에 ? count의 값을 적어 주어야 한다
-	//스프링은 매개변수에 적은 int count를 판단하지 못 한다
-	//즉 스프링에는 쿼리 스트링 이라는 방식이 있는데 이것이 url?변수명=변수값을 적어 준다(여러개 가능 사이에는 &사용)
+	
+	
+	@RequestMapping("/usr/home/getFloat")
+	@ResponseBody
+	public float getFloat() {
+		return 10.5f;
+	}
+	
+	
+	@RequestMapping("/usr/home/getDouble")
+	@ResponseBody
+	public double getDouble() {
+		return 10.5;
+	}
+	
+	
+	
+	@RequestMapping("/usr/home/getBoolean")
+	@ResponseBody
+	public boolean getBoolean() {
+		return true;  //브라우저 에서 보여지는 true이는 불린 값이 아니다. 브라우저는 자바 에서 사용하는 것을 인식X
+	}
+	
+	
+	
+	@RequestMapping("/usr/home/getCharacter")
+	@ResponseBody
+	public char getCharacter() {
+		return 'a';
+	}
+	
+	
+	
+	//자바의 경우 위의 상황 처럼 다양한 데이터 처리를 할 수 있지만 브라우저는 오직 문장만 인식 가능
+	
+	@RequestMapping("/usr/home/getMap")
+	@ResponseBody
+	public Map<String, Object> getMap() {
+		Map<String, Object> map = new HashMap<>();
+		map.put("철수 나이", 22);
+		map.put("영희 나이", 22);
+		
+		return map;
+		
+		//여기서 Map는 자바만 이해할 수 있는 개념
+		//ResposneBody는 하래의 함수가 리턴한 값을 브라우저에 보여줘라
+		//브라우저는 문장 밖에 알지 못 한다
+	}
 	
 	
 	
 	
+	@RequestMapping("/usr/home/getList")
+	@ResponseBody
+	public List<String> getList(){
+		List<String> list = new ArrayList<>();
+		list.add("철수");
+		list.add("영희");
+		
+		return list;
+		//자바스크립트 배열 형태로 브라우저에 나온다
+		//이것은 문장이다(자바스크립트가 아니다)
+	}	
+	
+	
+	@RequestMapping("/usr/home/getArticle")
+	@ResponseBody
+	public Article getArticle() {
+		Article article = new Article(1, "제목1");
+		
+		return article;
+	}
+	
+	
+	@RequestMapping("/usr/home/getArticles")
+	@ResponseBody
+	public List<Article> getArticles() {
+		Article article1 = new Article(1, "제목1");
+		Article article2 = new Article(2, "제목2");
+		
+		List<Article> list = new ArrayList<>();
+		list.add(article1);
+		list.add(article2);
+		
+		return list;
+	}
+	//자바에서 객체 또는 map의 경우는 웹브라우저에 {}안에 표시가 되어 출력 된다
 	
 	
 
 }
+
+
+// @Getter를 일일이 붙이기 그러면, @Data를 붙여도 된다
+@AllArgsConstructor // 객체를 생성할때 매개변수로 받을 수 있다.
+@NoArgsConstructor //인자 없는 생성자를 만들 수 있다.
+class Article{
+	@Getter //private이기 때문에 public 으로 바꾸는 대신
+	private int id;
+	@Getter
+	private String title;
+	
+//	public Article() {
+//		id = 1;
+//		title = "제목1";
+//	}  @AllArgsConstructor 사용하면 생성자를 만들어 줄 필요가 없다
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
