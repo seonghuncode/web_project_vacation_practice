@@ -12,49 +12,32 @@ public class UsrHomeController {
 	
 	//생성자를 만들어 초기화 해주는 것이 좋은 방법 (바로 초기화 해도 되지만)
 	public UsrHomeController() {
-		count = 0;
-	}
-	
-	
-	@RequestMapping("/usr/home/main")
-	@ResponseBody
-	public String showMain() {
-		return "안녕하세요";
-	}
-	
-	
-	@RequestMapping("/usr/home/main2")
-	@ResponseBody
-	public String showMain2() {
-		return "반갑습니다.";
-	}
-	
-	
-	@RequestMapping("/usr/home/main3")
-	@ResponseBody
-	public String showMain3() {
-		return "또 만나요";
+		count = -1;
 	}
 	
 	
 	
-	@RequestMapping("/usr/home/main4")
+	
+	
+	@RequestMapping("/usr/home/getCount")
 	@ResponseBody
-	public int showMain4() {
+	public int getCount() {
 		//int count = 0;  지역 변수의 값은 저장이 되지 않기 때문에 전역 변수로 만들어 주어야 한다.
-		count++;
 		return count;
 	}
 	
 	
 	
-	@RequestMapping("/usr/home/main5")
+	@RequestMapping("/usr/home/doSetCount")
 	@ResponseBody
-	public String showMain5() {
-		
-		count = 0;
-		return "count의 값이 0으로 초기화 되었습니다.";
+	public String doSetCount(int count) {
+		this.count = count;
+		return "count의 값이" + this.count + "초기화 되었습니다.";
 	}
+	//위의 코드는 new UsrHomeController().doSetCount(10)와 유사한 개념
+	//부라우저 에서 url뒤에 ? count의 값을 적어 주어야 한다
+	//스프링은 매개변수에 적은 int count를 판단하지 못 한다
+	//즉 스프링에는 쿼리 스트링 이라는 방식이 있는데 이것이 url?변수명=변수값을 적어 준다(여러개 가능 사이에는 &사용)
 	
 	
 	
