@@ -9,9 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import com.ysh.exam.demo.vo.Article;
 
 @Controller
 public class UsrHomeController {
@@ -97,7 +95,7 @@ public class UsrHomeController {
 	@RequestMapping("/usr/home/getArticle")
 	@ResponseBody
 	public Article getArticle() {
-		Article article = new Article(1, "제목1");
+		Article article = new Article(1, "제목1", "내용2");
 		
 		return article;
 	}
@@ -106,8 +104,8 @@ public class UsrHomeController {
 	@RequestMapping("/usr/home/getArticles")
 	@ResponseBody
 	public List<Article> getArticles() {
-		Article article1 = new Article(1, "제목1");
-		Article article2 = new Article(2, "제목2");
+		Article article1 = new Article(1, "제목1", "내용2");
+		Article article2 = new Article(2, "제목2", "내용2");
 		
 		List<Article> list = new ArrayList<>();
 		list.add(article1);
@@ -116,26 +114,13 @@ public class UsrHomeController {
 		return list;
 	}
 	//자바에서 객체 또는 map의 경우는 웹브라우저에 {}안에 표시가 되어 출력 된다
-	
+	//자바 세상에서 array or list 는 브라우저에 []형식으로 번역이 된다
 	
 
 }
 
 
-// @Getter를 일일이 붙이기 그러면, @Data를 붙여도 된다
-@AllArgsConstructor // 객체를 생성할때 매개변수로 받을 수 있다.
-@NoArgsConstructor //인자 없는 생성자를 만들 수 있다.
-class Article{
-	@Getter //private이기 때문에 public 으로 바꾸는 대신
-	private int id;
-	@Getter
-	private String title;
-	
-//	public Article() {
-//		id = 1;
-//		title = "제목1";
-//	}  @AllArgsConstructor 사용하면 생성자를 만들어 줄 필요가 없다
-}
+
 
 
 
