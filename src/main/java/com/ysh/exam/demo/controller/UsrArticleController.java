@@ -117,6 +117,24 @@ public class UsrArticleController {
 	}
 	
 	
+	
+	@RequestMapping("/usr/article/getArticle")
+	@ResponseBody
+	public Object getArticleAction(int id){  //Object는 article, String 모두의 상위 객체로 모든것을 의미 한다(String, article)을 return해 주어야 하기 때문에 object를 사용했다.
+		//메서드명은 getArticle이 이미있기 때문에 Action을 붙였다 중요X
+		
+		Article article = getArticle(id);
+		
+		if(article == null) {
+			return id + "번 게시물은 존재하지 않습니다";
+		}
+		
+		return article;
+		
+	}
+	
+	
+	
 	@RequestMapping("/usr/article/doDelete")
 	@ResponseBody
 	public String doDelete(int id) {
