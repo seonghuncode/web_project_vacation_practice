@@ -3,16 +3,22 @@ package com.ysh.exam.demo.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ysh.exam.demo.service.ArticleService;
 import com.ysh.exam.demo.vo.Article;
 
 @Controller
 public class UsrArticleController {
 	
+	
 	//인스턴스 변수 시작
+	@Autowired  //알아서 new를 해준다 시용은 @service 혹은 dao같은 어노테이션을 달은 것에 대해서만 사용한다
+	//(컴포넌트에 등록된 것들만 사용 한다), 따로 객체를 만들지 않아도 된다
+	private ArticleService articleService;  //서비스를 사용하기 위해
 	private int articlesLastId;
 	private List<Article> articles; 
 	//인스턴스 변수 끝
@@ -20,6 +26,8 @@ public class UsrArticleController {
 	
 	//생성자
 	public UsrArticleController() {
+		//articleService = new ArticleService();  //@Service라는 어노테이션을 달면 컴포너트로 의존성 주입 처럼 되기 때무네 이것을 적지 않고 @AutoWired를 위에 사용해주면 된다
+		
 		articlesLastId = 0;
 		articles = new ArrayList<>();
 		
@@ -121,7 +129,7 @@ public class UsrArticleController {
 	@RequestMapping("/usr/article/getArticle")
 	@ResponseBody
 	public Object getArticleAction(int id){  //Object는 article, String 모두의 상위 객체로 모든것을 의미 한다(String, article)을 return해 주어야 하기 때문에 object를 사용했다.
-		//메서드명은 getArticle이 이미있기 때문에 Action을 붙였다 중요X
+		//메서드명은 getArticle이 이미있기 때문에 Action을 붙였다 중요X, 가장 상위 타입이 object이다
 		
 		Article article = getArticle(id);
 		
