@@ -72,6 +72,19 @@ public class UsrArticleController {
 		
 	}
 	
+	
+	private void modifyArticle(int id, String title, String body) {
+		
+		//수정을 하려면 일단 수정할 게시물을 찾아와야 한다
+		Article article = getArticle(id);
+		
+		article.setTitle(title);
+		article.setBody(body);
+		
+		
+	}
+	
+	
 	//서비스 메서드 끝
 	
 	
@@ -118,6 +131,24 @@ public class UsrArticleController {
 		
 		return  id + "번 게시물이 삭제 되었 습니다.";
 	}
+
+
+	
+	@RequestMapping("/usr/article/doModify")
+	@ResponseBody
+	public String doModify(int id, String title, String body) {
+		Article article = getArticle(id);
+		
+		if(article == null) {
+			return id + "번 게시물이 존재 하지 않습니다.";
+		}
+		
+		modifyArticle(id, title, body);
+		
+		return id + "게시물을 수정 하였습니다.";
+		
+	}
+
 
 
 	
