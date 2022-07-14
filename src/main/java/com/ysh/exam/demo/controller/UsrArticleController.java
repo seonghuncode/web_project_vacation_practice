@@ -26,15 +26,26 @@ public class UsrArticleController {
 	
 	private void makeTestData() {
 		for(int i = 1; i <= 10; i++) {
-			int id = articlesLastId + 1;
 			String title = "제목" + i;
 			String body = "내용" + i;
+		
+			wirteArticle(title,body);
+		
+		}
+	}
+	
+	
+	public Article wirteArticle(String title, String body ) {
+		//중복된는 로직을 따로 만들어 메서드 호출로 간편하게 사용하기 위해 만들 었다
+			int id = articlesLastId + 1;
 			Article article = new Article(id, title, body);
 			
 			articles.add(article);
 			articlesLastId = id;
-		}
+			
+			return article;
 	}
+	
 	
 	
 	
@@ -44,11 +55,8 @@ public class UsrArticleController {
 	public Article doAdd(String title, String body) {
 		//게시물 id, title, body값을 저장 하는 과정
 		
-		int id = articlesLastId + 1;
-		Article article = new Article(id, title, body);
-		
-		articles.add(article);
-		articlesLastId = id;
+
+		Article article = wirteArticle(title, body);
 		
 		return article;
 		//실행 하면 title, body에 null값이 들어간다 즉 url창에서 ?값을 넣어 준다
