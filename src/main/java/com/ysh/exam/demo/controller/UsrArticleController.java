@@ -12,9 +12,13 @@ import com.ysh.exam.demo.vo.Article;
 @Controller
 public class UsrArticleController {
 	
+	//인스턴스 변수 시작
 	private int articlesLastId;
 	private List<Article> articles; 
+	//인스턴스 변수 끝
 	
+	
+	//생성자
 	public UsrArticleController() {
 		articlesLastId = 0;
 		articles = new ArrayList<>();
@@ -23,7 +27,7 @@ public class UsrArticleController {
 	}
 	
 	
-	
+	//서비스 메서드 시작
 	private void makeTestData() {
 		for(int i = 1; i <= 10; i++) {
 			String title = "제목" + i;
@@ -47,6 +51,33 @@ public class UsrArticleController {
 	}
 	
 	
+	
+	private Article getArticle(int id) {
+		
+		for(Article article : articles){  //향상된 for문으로  articles에 들어 있는 것이 끝날때 까지 반복
+			if(article.getId() == id) { //private이기 때문에 getter를 이용해서 getID()로 가지고 와야 한다
+				return article;
+			}
+		}
+		
+		return null;
+		
+	}
+	
+	
+	private void deleteArticle(int id) {
+		Article article = getArticle(id);
+		
+		articles.remove(article);
+		
+	}
+	
+	//서비스 메서드 끝
+	
+	
+	
+	
+	//액션 메서드 시작
 	
 	
 	
@@ -77,8 +108,28 @@ public class UsrArticleController {
 	@ResponseBody
 	public String doDelete(int id) {
 		
+		Article article = getArticle(id); //getArticle에게 게시물을 찾아 오게 시킨다
+		
+		if(article == null) {
+			return  id + "번 게시물이 존재 하지 않습니다..";
+		}
+		
+		deleteArticle(id);
+		
 		return  id + "번 게시물이 삭제 되었 습니다.";
 	}
+
+
+	
+
+	
+	
+	
+	
+	//액션 메서드 끝
+
+
+
 	
 	
 
