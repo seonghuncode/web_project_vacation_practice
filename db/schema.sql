@@ -43,6 +43,3 @@ SELECT * FROM article;
 
 
 
-
-
-
