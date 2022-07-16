@@ -80,7 +80,8 @@ public class UsrArticleController {
 	@RequestMapping("/usr/article/doModify")
 	@ResponseBody
 	public String doModify(int id, String title, String body) {
-		Article article = articleService.getArticle(id);
+		Article article = articleService.getArticle(id); 
+		//getArticle()의 경우 리포지터리 에서 가지고 있지만 컨트롤러 에서 바로 접근을 하면 안되는 구조이기 때문에 인접한 Service에게 요청을 해서 service를 통해 정보를 가지고  온다
 		
 		if(article == null) {
 			return id + "번 게시물이 존재 하지 않습니다.";
