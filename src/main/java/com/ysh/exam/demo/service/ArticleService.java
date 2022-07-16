@@ -26,7 +26,6 @@ public class ArticleService {
 
 	public ArticleService(ArticleRepository articleRepository) {
 		this.articleRepository = articleRepository;
-		articleRepository.makeTestData();  //@Autowired가 객체를 생성하고 생성자는 바로실행 되기 때문에 약간 기다려야 되는데 바로 실행이 되기 때문에 testDate가 제대로 실행이 되지 않는다
 	}
 	
 

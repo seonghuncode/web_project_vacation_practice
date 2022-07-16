@@ -44,7 +44,21 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		
+		<dependency>
+			<groupId>org.mybatis.spring.boot</groupId>
+			<artifactId>mybatis-spring-boot-starter</artifactId>
+			<version>2.2.2</version>
+		</dependency>
+		<!-- ==> 자바랑 mysql을 연결해주는 역할, 예를 쓰기 위해서는 아래의 mysql이 필요 허가 때문에 그냥 같이 써준 것이다(즉 픽요한 것은 이기능만 이다) -->
+		
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<scope>runtime</scope>
+		</dependency>
 	</dependencies>
+	<!-- mysql을 의존성 주입을 했으면 application.yml에 DB에 대한 정보를 적어 주어야 한다 -->
 
 	<build>
 		<plugins>

@@ -1,14 +1,15 @@
 package com.ysh.exam.demo.repository;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.stereotype.Component;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 import com.ysh.exam.demo.vo.Article;
 
-@Component //@Service랑 @Component랑은 같은 것이다.(깉은 것이라고 생각을 하면 된다)
-public class ArticleRepository {
+@Mapper
+public interface ArticleRepository {
 	
 	
 	//데이터 유지, 관리는 DB가 하는게 맞다 
@@ -16,88 +17,32 @@ public class ArticleRepository {
 	//단순한 로직은 리포지 터리가 할 수 있게 서비스 에서 토스를 한다
 	
 	
+	//이렇게 많은 값들을 지우고 간단하게 할 수 있는 이유 :
+	//마이버타스를 사용하고 @Mapper를 사용하면 알아서 되기 때문이다
+	//(마이바티스를 가지고 오는 방법은 의존성을 추가해주는 것이다.)
+	//mybatis, mysql driver 의존성 주입 + interface + @Mapper + DB접속정보를 추가
 	
-
-	private int articlesLastId;
-	private List<Article> articles; 
-	
-	
-	
-	public ArticleRepository() {
-		//articleService = new ArticleService();  //@Service라는 어노테이션을 달면 컴포너트로 의존성 주입 처럼 되기 때무네 이것을 적지 않고 @AutoWired를 위에 사용해주면 된다
-		
-		articlesLastId = 0;
-		articles = new ArrayList<>();
-		
-	}
-	
-	
-	//테스트 데이터의 경우 리포지 터리에 있으면 안된다. 이유는 
-	//리포지터리가 하는 일은 어떠한 데이터를 저장, 찾아서 주기, 지우기..... => 단순한 일(창고직 같은것), 복잡한 로직은 주면 안된다
-	public void makeTestData() {
-		for(int i = 1; i <= 10; i++) {
-			String title = "제목" + i;
-			String body = "내용" + i;
-		
-			writeArticle(title,body);
-		
-		}
-	}
-	
-	
-	//서비스 메서드 시작
+	//interface안에는 추상 메서드만 넣을 수 있다
+	//추상메서드 = 실제 구현부가 없는 것을 의미
+	//아래의 코드를 하면 빠진 기능들을 마이바티스가 알아서 추가를 해주어 구현해 준다
+	//(하지만 마이바티스가 알아서 할 수 있도록 힌트를 주어야 한다) -> @Select, @Parm 을 사용하여
 
 	
-	
-	public Article writeArticle(String title, String body ) {
-		//중복된는 로직을 따로 만들어 메서드 호출로 간편하게 사용하기 위해 만들 었다
-			int id = articlesLastId + 1;
-			Article article = new Article(id, title, body);
-			
-			articles.add(article);
-			articlesLastId = id;
-			
-			return article;
-	}
-	
-	
-	
-	public Article getArticle(int id) {
-		
-		for(Article article : articles){  //향상된 for문으로  articles에 들어 있는 것이 끝날때 까지 반복
-			if(article.getId() == id) { //private이기 때문에 getter를 이용해서 getID()로 가지고 와야 한다
-				return article;
-			}
-		}
-		
-		return null;
-		
-	}
-	
-	
-	public void deleteArticle(int id) {
-		Article article = getArticle(id);
-		
-		articles.remove(article);
-		
-	}
-	
-	
-	public void modifyArticle(int id, String title, String body) {
-		
-		//수정을 하려면 일단 수정할 게시물을 찾아와야 한다
-		Article article = getArticle(id);
-		
-		article.setTitle(title);
-		article.setBody(body);
-		
-		
-	}
+	//INSERT INTO article SET regDate = NOW(), updateDate = NOW(), title = >, body = ?
+	public Article writeArticle(String title, String body );
 
+	//(SELECT * FROM article WHERE id = ?) 이러한 쿼리가 실행이 되야 기능이 동작한다
+	@Select("select * from article where id = #{id}") // == 아래의 메서드가 실행 되면 이와 같은 쿼리문이 실행 된다 id는 아래의 id를 받는다. 실행하고 Article에 담아서 리턴을 한다
+	public Article getArticle(@Param("id") int id);
+	
+	//(DELETE * FROM article WHERE id = ?)
+	public void deleteArticle(int id);
+	
+	//(UPDATE article SET title = ?, body = ?, updateDate = NOW() WHERE id = ?)
+	public void modifyArticle(int id, String title, String body);
 
-	public List<Article> getArticles() {
-		return articles;
-	}
+	//(SELECT * FROM article ORDER BY id DESC)
+	public List<Article> getArticles();
 	
 	
 	//서비스 메서드 끝
