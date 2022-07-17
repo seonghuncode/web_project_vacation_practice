@@ -25,7 +25,9 @@ public class UsrArticleController {
 		//게시물 id, title, body값을 저장 하는 과정
 		
 
-		Article article = articleService.writeArticle(title, body);
+		int id = articleService.writeArticle(title, body);
+		
+		Article article = articleService.getArticle(id);
 		
 		return article;
 		//실행 하면 title, body에 null값이 들어간다 즉 url창에서 ?값을 넣어 준다
@@ -45,7 +47,7 @@ public class UsrArticleController {
 	
 	@RequestMapping("/usr/article/getArticle")
 	@ResponseBody
-	public Object getArticleAction(int id){  //Object는 article, String 모두의 상위 객체로 모든것을 의미 한다(String, article)을 return해 주어야 하기 때문에 object를 사용했다.
+	public Object getArticle(int id){  //Object는 article, String 모두의 상위 객체로 모든것을 의미 한다(String, article)을 return해 주어야 하기 때문에 object를 사용했다.
 		//메서드명은 getArticle이 이미있기 때문에 Action을 붙였다 중요X, 가장 상위 타입이 object이다
 		
 		Article article = articleService.getArticle(id);

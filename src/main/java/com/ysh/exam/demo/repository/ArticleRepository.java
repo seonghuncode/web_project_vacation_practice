@@ -33,8 +33,9 @@ public interface ArticleRepository {
 	
 	//INSERT INTO article SET regDate = NOW(), updateDate = NOW(), title = ?, body = ?
 	@Insert("INSERT INTO article SET regDate = NOW(), updateDate = NOW(), title = #{title}, `body` = #{body}")
-	public Article writeArticle(@Param("title") String title,@Param("body") String body );
-
+	public void writeArticle(@Param("title") String title,@Param("body") String body );
+	//insert의 경우는 return을 해주지 않는다(write는 들어가는 값이기 때문에 리턴값이 없다)
+	
 	//(SELECT * FROM article WHERE id = ?) 이러한 쿼리가 실행이 되야 기능이 동작한다
 	@Select("SELECT * FROM article WHERE id = #{id}") // == 아래의 메서드가 실행 되면 이와 같은 쿼리문이 실행 된다 id는 아래의 id를 받는다. 실행하고 Article에 담아서 리턴을 한다
 	public Article getArticle(@Param("id") int id);
@@ -50,6 +51,10 @@ public interface ArticleRepository {
 	//(SELECT * FROM article ORDER BY id DESC)
 	@Select("SELECT * FROM article ORDER BY id DESC")
 	public List<Article> getArticles();
+
+	//위의 insert의 경우 리턴을 안해주기 때문에 mysql의 기능인 last_insert_id라는 기능으로 마지막에 insert한 id값을 가지고 온다
+	@Select("SELECT LAST_INSERT_ID()")
+	public int getLastInsertId();
 	
 	
 	//서비스 메서드 끝
