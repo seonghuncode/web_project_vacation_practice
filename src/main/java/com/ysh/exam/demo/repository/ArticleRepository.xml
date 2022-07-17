@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+	namespace="com.ysh.exam.demo.repository.ArticleRepository"> <!-- 짝이 되는 파일 위치 -->
+	<insert id="writeArticle"> <!-- id는 기존의 해당 퍼알의 기존의 메서드명 -->
+		INSERT INTO article
+		SET regDate = NOW(),
+		updateDate = NOW(),
+		title = #{title},
+		`body` = #{body}
+	</insert> <!-- 나머지 쿼리문은 그대로 -->
+
+	<select id="getArticles" resultType="Article"> <!-- resultType은 return하려던 것이다. -->
+		SELECT *
+		FROM article
+		ORDER BY
+		id DESC
+	</select>
+	<!-- 원래 resultType명은 모두 다 적어야 하는데
+	application.yml에 type-aliases-package명을 적어 두었기 때문에 Article로만 적어도 가능 하다. 
+	원래는 com.ysh.exam.demo.vo.Article로 적어야 한다.-->
+
+	<select id="getArticle" resultType="Article">
+		SELECT *
+		FROM article
+		WHERE 1
+		AND id = #{id}
+	</select>
+
+	<select id="getLastInsertId" resultType="int">
+		SELECT LAST_INSERT_ID()
+	</select>
+
+	<delete id="deleteArticle">
+		DELETE
+		FROM article
+		WHERE id = #{id}
+	</delete>
+
+	<update id="modifyArticle">
+		UPDATE article
+		SET title = #{title},
+		`body` = #{body},
+		updateDate = NOW()
+		WHERE id = #{id}
+	</update>
+</mapper> 
