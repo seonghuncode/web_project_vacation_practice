@@ -39,7 +39,13 @@ title = '제목 3',
 `body` = '내용 3';
 
 
-SELECT * FROM article;
+select * from article;
+
+#mysql의 기능 : 가장 마지막에 insert한 번호가 나온다
+select last_insert_id();
+
+
+
 
 
 
