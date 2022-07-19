@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ysh.exam.demo.service.MemberService;
+import com.ysh.exam.demo.util.Ut;
 import com.ysh.exam.demo.vo.Member;
 
 @Controller
@@ -31,27 +32,27 @@ public class UsrMemberController {
 	public Object doJoin(String loginId, String loginPw, String name, String nickname, String cellphoneNo, String email) {
 		
 		//trim() : 띄어쓰기 length = 0 : 공백
-		if(loginId == null || loginId.trim().length() == 0) {
+		if(Ut.empty(loginId)) {
 			return "loginId(을)를 입력해 주세요.";
 		}
 		
-		if(loginPw == null || loginPw.trim().length() == 0) {
+		if(Ut.empty(loginPw)) {
 			return "loginPw(을)를 입력해 주세요.";
 		}
 		
-		if(name == null || name.trim().length() == 0) {
+		if(Ut.empty(name)) {
 			return "name(을)를 입력해 주세요.";
 		}
 		
-		if(nickname == null || nickname.trim().length() == 0) {
+		if(Ut.empty(nickname)) {
 			return "nickname(을)를 입력해 주세요.";
 		}
 		
-		if(cellphoneNo == null || cellphoneNo.trim().length() == 0) {
+		if(Ut.empty(cellphoneNo)) {
 			return "cellphoneNo(을)를 입력해 주세요.";
 		}
 		
-		if(email == null || email.trim().length() == 0) {
+		if(Ut.empty(email)) {
 			return "email(을)를 입력해 주세요.";
 		}
 		
@@ -60,6 +61,10 @@ public class UsrMemberController {
 		
 		if(id == -1) {
 			return "해당 로그인 아이디는 이미 사용중 입니다.";
+		}
+		
+		if(id == -2) {
+			return "해당 이름과 이메일은 이미 사용중 입니다.";
 		}
 		
 		Member member = memberService.getMemberById(id);
