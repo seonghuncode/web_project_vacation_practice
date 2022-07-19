@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ysh.exam.demo.service.MemberService;
+import com.ysh.exam.demo.vo.Member;
 
 @Controller
 public class UsrMemberController {
@@ -27,9 +28,12 @@ public class UsrMemberController {
 	//==> 컨트롤러는 손님의 요구사항을 service에 전달을 해주어야 한다
 	@RequestMapping("/usr/member/doJoin")
 	@ResponseBody
-	public String doJoin(String loginId, String loginPw, String name, String nickname, String cellphoneNo, String email) {
-		memberService.join(loginId, loginPw, name, nickname, cellphoneNo, email);
-		return "안녕하세요.";
+	public Member doJoin(String loginId, String loginPw, String name, String nickname, String cellphoneNo, String email) {
+		int id = memberService.join(loginId, loginPw, name, nickname, cellphoneNo, email);
+		
+		Member member = memberService.getMemberById(id);
+		
+		return member;
 	}
 	
 	
