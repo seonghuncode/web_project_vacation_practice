@@ -28,8 +28,14 @@ public class UsrMemberController {
 	//==> 컨트롤러는 손님의 요구사항을 service에 전달을 해주어야 한다
 	@RequestMapping("/usr/member/doJoin")
 	@ResponseBody
-	public Member doJoin(String loginId, String loginPw, String name, String nickname, String cellphoneNo, String email) {
+	public Object doJoin(String loginId, String loginPw, String name, String nickname, String cellphoneNo, String email) {
+		
+		//성공하면 id에 1이상의 숫자가 들어오고 실패하면 -1이들어 온다
 		int id = memberService.join(loginId, loginPw, name, nickname, cellphoneNo, email);
+		
+		if(id == -1) {
+			return "해당 로그인 아이디는 이미 사용중 입니다.";
+		}
 		
 		Member member = memberService.getMemberById(id);
 		

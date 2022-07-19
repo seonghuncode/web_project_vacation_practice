@@ -16,8 +16,21 @@ public class MemberService {
 
 
 	public int join(String loginId, String loginPw, String name, String nickname, String cellphoneNo, String email) {
+		
+		Member oldMember = getMemberByLoginId(loginId);
+		
+		if(oldMember != null) { // == 존재한다면
+			return -1; // 리턴하는 것은 번호 해당 번호는 인덱스(가입된 회원의 번호)
+		}
+		
+		
 		memberRepository.join(loginId, loginPw, name, nickname, cellphoneNo, email);
 		return memberRepository.getLastInsertId();
+	}
+
+
+	private Member getMemberByLoginId(String loginId) {
+		return memberRepository.getMemberByLoginId(loginId);
 	}
 
 

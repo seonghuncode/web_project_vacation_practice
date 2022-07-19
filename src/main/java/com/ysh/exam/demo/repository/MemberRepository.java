@@ -34,6 +34,15 @@ public interface MemberRepository {
 			WHERE M.id = #{id}
 			""") //AS M은 나중에 join이 들어올 수도 있기 때문에 미리 해둔 것이다.
 	Member getMemberById(@Param("id") int id);
+	
+	
+	
+	@Select("""
+			SELECT *
+			FROM `member` AS M
+			WHERE M.loginId = #{loginId}
+			""")
+	Member getMemberByLoginId(@Param("loginId") String loginId);
 		
 	
 
