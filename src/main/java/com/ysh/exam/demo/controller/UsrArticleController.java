@@ -47,9 +47,12 @@ public class UsrArticleController {
 	
 	@RequestMapping("/usr/article/getArticles")
 	@ResponseBody
-	public List<Article> getArticles(){
+	public ResultData getArticles(){
+		
+		List<Article> articles = articleService.getArticles();
+		
 		//저장된 게시물을 보여 주는 기능
-		return articleService.getArticles();
+		return ResultData.from("S-1", "게시물 리스트 입니다.", articles);
 	}
 	
 	
