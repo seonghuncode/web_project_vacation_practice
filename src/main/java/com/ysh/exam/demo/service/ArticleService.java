@@ -2,10 +2,13 @@ package com.ysh.exam.demo.service;
 
 
 import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.ysh.exam.demo.repository.ArticleRepository;
+import com.ysh.exam.demo.util.Ut;
 import com.ysh.exam.demo.vo.Article;
+import com.ysh.exam.demo.vo.ResultData;
 
 //패키지명에 있어 항상 demo application이 가지고 있는 부분 까지는 무조건 써주어야 한다
 
@@ -31,10 +34,11 @@ public class ArticleService {
 
 
 
-		public int writeArticle(String title, String body) {
+		public ResultData writeArticle(String title, String body) {
 			articleRepository.writeArticle(title, body); //write의 경우 들어가는 글이기 때문애 return값이 없다 ==> 어떤 값이 들어왔는지 알기 위해서는 lastInsertId를 만들어 값을 받는다
-			return articleRepository.getLastInsertId();
+			int id = articleRepository.getLastInsertId();
 			
+			return ResultData.from("S-1", Ut.f("%d번 게시물이 생성 되었습니다.", id), id);
 		}
 
 

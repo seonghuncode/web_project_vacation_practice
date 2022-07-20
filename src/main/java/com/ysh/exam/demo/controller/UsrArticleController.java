@@ -23,16 +23,23 @@ public class UsrArticleController {
 	
 	@RequestMapping("/usr/article/doAdd")  //Home에 만들어도 되지만 실무 에서는 따로 나누어 쓴다
 	@ResponseBody
-	public Article doAdd(String title, String body) {
-		//게시물 id, title, body값을 저장 하는 과정
+	public ResultData doAdd(String title, String body) {
 		
-
-		int id = articleService.writeArticle(title, body);
+		if(Ut.empty(title)) {
+			return ResultData.from("F-1", "title(을)를 입력해 주세요.");
+		}
+		if(Ut.empty(body)) {
+			return ResultData.from("F-1", "body(을)를 입력해 주세요.");
+		}
+		
+		//게시물 id, title, body값을 저장 하는 과정
+		ResultData writeArticleRd = articleService.writeArticle(title, body);  //원래는 1만 주었다면 이제는 resultCode, msg도 준다.
+		int id = (int)writeArticleRd.getData1();
 		
 		Article article = articleService.getArticle(id);
 		
-		return article;
-		//실행 하면 title, body에 null값이 들어간다 즉 url창에서 ?값을 넣어 준다
+		return ResultData.from(writeArticleRd.getResultCode(), writeArticleRd.getMsg(), article);
+		
 		
 	}
 	
