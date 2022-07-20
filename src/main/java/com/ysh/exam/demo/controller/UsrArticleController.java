@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ysh.exam.demo.service.ArticleService;
+import com.ysh.exam.demo.util.Ut;
 import com.ysh.exam.demo.vo.Article;
+import com.ysh.exam.demo.vo.ResultData;
 
 @Controller
 public class UsrArticleController {
@@ -47,16 +49,16 @@ public class UsrArticleController {
 	
 	@RequestMapping("/usr/article/getArticle")
 	@ResponseBody
-	public Object getArticle(int id){  //Object는 article, String 모두의 상위 객체로 모든것을 의미 한다(String, article)을 return해 주어야 하기 때문에 object를 사용했다.
+	public ResultData getArticle(int id){  //Object는 article, String 모두의 상위 객체로 모든것을 의미 한다(String, article)을 return해 주어야 하기 때문에 object를 사용했다.
 		//메서드명은 getArticle이 이미있기 때문에 Action을 붙였다 중요X, 가장 상위 타입이 object이다
 		
 		Article article = articleService.getArticle(id);
 		
 		if(article == null) {
-			return id + "번 게시물은 존재하지 않습니다";
+			return ResultData.from("F-1", Ut.f("%d번 게시물이 존재하지 않습니다.", id)); //F-1은 개발자가 그냥 정해주면 된다
 		}
 		
-		return article;
+		return ResultData.from("S-1", Ut.f("%d번 게시물 입니다.", id), article);
 		
 	}
 	

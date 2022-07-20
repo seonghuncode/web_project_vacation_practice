@@ -18,6 +18,13 @@ public class ResultData {
 		
 	}
 	
+	
+	public static ResultData from(String resultCode, String msg) {
+		return from(resultCode, msg, null);
+	} //메서드 오버로딩 법칙을 위해 두개만 받을 수 있는 메서드도 만들어 준다
+	
+	
+	
 	public static ResultData from(String resultCode, String msg, Object data1) {
 		ResultData rd = new ResultData();
 		rd.resultCode = resultCode;
