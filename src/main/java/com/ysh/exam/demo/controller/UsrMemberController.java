@@ -58,6 +58,8 @@ public class UsrMemberController {
 		
 		//성공하면 id에 1이상의 숫자가 들어오고 실패하면 -1이들어 온다
 		int id = memberService.join(loginId, loginPw, name, nickname, cellphoneNo, email);
+		//resultCode, msg를 알고 싶다.
+		
 		
 		if(id == -1) {
 			return Ut.f("해당 로그인 아이디(%s)는 이미 사용중 입니다.", loginId);
