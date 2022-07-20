@@ -3,7 +3,9 @@ package com.ysh.exam.demo.service;
 import org.springframework.stereotype.Service;
 
 import com.ysh.exam.demo.repository.MemberRepository;
+import com.ysh.exam.demo.util.Ut;
 import com.ysh.exam.demo.vo.Member;
+import com.ysh.exam.demo.vo.ResultData;
 
 @Service
 public class MemberService {
@@ -14,23 +16,26 @@ public class MemberService {
 		this.memberRepository = memberRepository;
 	}
 
-	public int join(String loginId, String loginPw, String name, String nickname, String cellphoneNo, String email) {
+	public  ResultData join(String loginId, String loginPw, String name, String nickname, String cellphoneNo, String email) {
 		// 로그인 아이디 증복 체크
 		Member oldMember = getMemberByLoginId(loginId);
 
 		if (oldMember != null) { // == 존재한다면
-			return -1; // 리턴하는 것은 번호 해당 번호는 인덱스(가입된 회원의 번호)
+			return ResultData.from("F-7", Ut.f("해당 로그인 아이디 %s는 이미 사용중 입니다", loginId));
 		}
 
 		//이름+이메일 중복 체크
 		oldMember = getMemberByNameAndEmail(name, email);
 
 		if (oldMember != null) { // == 존재한다면
-			return -2; // 오류에 따라 다른 번호를 리턴해서 오류 원인을 쉽게 파악할 수 있도록 한다
+			return ResultData.from("F-8", Ut.f("해당 이름(%s)과 이메일(%s)은 이미 사용중 입니다.", name, email));
 		}
 
 		memberRepository.join(loginId, loginPw, name, nickname, cellphoneNo, email);
-		return memberRepository.getLastInsertId();
+		
+		int id = memberRepository.getLastInsertId();
+		
+		return ResultData.from("S-1", "회원가입이 완료 되었습니다.", id);
 	}
 
 	private Member getMemberByNameAndEmail(String name, String email) {
