@@ -30,6 +30,10 @@ public class UsrMemberController {
 	@RequestMapping("/usr/member/doJoin")
 	@ResponseBody
 	public ResultData<Member> doJoin(String loginId, String loginPw, String name, String nickname, String cellphoneNo, String email) {
+	//고객에게 보여주는 것은 모두 ResultData에 담았다.
+	//ResultData<Member> : 정상적으로 실행이 되었을때 Member기 때문에 정상 실행시에 맞춘다. 실패시에는 Member가 없지만 괜찮다.
+		
+		
 		
 		//trim() : 띄어쓰기 length = 0 : 공백
 		if(Ut.empty(loginId)) {

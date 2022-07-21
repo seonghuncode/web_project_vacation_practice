@@ -24,7 +24,7 @@ public class UsrArticleController {
 	@RequestMapping("/usr/article/doAdd")  //Home에 만들어도 되지만 실무 에서는 따로 나누어 쓴다
 	@ResponseBody
 	public ResultData<Article> doAdd(String title, String body) {
-		//<Article>은 해도 안해도 큰 의미는 없다
+		//<Article>은 해도 안해도 큰 의미는 없다 : 사용할꺼면 정상적으로 실행이 될때 담고 있는 것에 맞춘다
 		
 		if(Ut.empty(title)) {
 			return ResultData.from("F-1", "title(을)를 입력해 주세요.");

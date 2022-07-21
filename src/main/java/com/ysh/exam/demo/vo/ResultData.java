@@ -12,7 +12,7 @@ public class ResultData<DT> {
 	@Getter
 	private String msg; //보고서에 메세지
 	@Getter
-	private DT data1;
+	private DT data1; //위에서 DT가 들어오면 그 형태 이고 안들어 오게 괴면 Object형태이다.
 	
 	//private는 외부에서 접근할 수 없다
 	private ResultData() {
