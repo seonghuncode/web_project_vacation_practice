@@ -37,6 +37,8 @@ import lombok.NoArgsConstructor;
 public class Article{    //파일명에 해당 하는 class는 무조건 public이 있어야 한다.
 	
 	private int id;
+	private String regDate;
+	private String updateDate;
 	private String title;
 	private String body;
 	
