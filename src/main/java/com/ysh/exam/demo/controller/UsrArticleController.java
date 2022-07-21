@@ -40,10 +40,15 @@ public class UsrArticleController {
 		//ResultData가 품고 있는 보고서의 메인 데이터는 int이다. -> 형변환을 해주지 않아도 된다
 		ResultData<Integer> writeArticleRd = articleService.writeArticle(title, body);  //원래는 1만 주었다면 이제는 resultCode, msg도 준다.
 		int id = writeArticleRd.getData1();
+		//현재 받은 데이터
+		//S-1
+		//4번 게시뭏 입니다.
+		//4  
+		// ==> 고객에게 보여 줄때는 
 		
 		Article article = articleService.getArticle(id);
 		
-		return ResultData.from(writeArticleRd.getResultCode(), writeArticleRd.getMsg(), article);
+		return ResultData.newData(writeArticleRd, article);
 		
 		
 	}
