@@ -33,8 +33,13 @@ public class UsrArticleController {
 		}
 		
 		//게시물 id, title, body값을 저장 하는 과정
-		ResultData writeArticleRd = articleService.writeArticle(title, body);  //원래는 1만 주었다면 이제는 resultCode, msg도 준다.
-		int id = (int)writeArticleRd.getData1();
+//		ResultData writeArticleRd = articleService.writeArticle(title, body);  //원래는 1만 주었다면 이제는 resultCode, msg도 준다.
+//		int id = (int)writeArticleRd.getData1();
+		
+		//(int를 사용하지 않기 위해서 수정한 코드)
+		//ResultData가 품고 있는 보고서의 메인 데이터는 int이다. -> 형변환을 해주지 않아도 된다
+		ResultData<Integer> writeArticleRd = articleService.writeArticle(title, body);  //원래는 1만 주었다면 이제는 resultCode, msg도 준다.
+		int id = writeArticleRd.getData1();
 		
 		Article article = articleService.getArticle(id);
 		

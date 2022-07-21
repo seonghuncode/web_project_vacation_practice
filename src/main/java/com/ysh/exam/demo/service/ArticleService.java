@@ -34,7 +34,7 @@ public class ArticleService {
 
 
 
-		public ResultData writeArticle(String title, String body) {
+		public ResultData<Integer> writeArticle(String title, String body) {
 			articleRepository.writeArticle(title, body); //write의 경우 들어가는 글이기 때문애 return값이 없다 ==> 어떤 값이 들어왔는지 알기 위해서는 lastInsertId를 만들어 값을 받는다
 			int id = articleRepository.getLastInsertId();
 			
