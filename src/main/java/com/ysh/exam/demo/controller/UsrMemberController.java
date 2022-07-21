@@ -1,5 +1,7 @@
 package com.ysh.exam.demo.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -83,6 +85,52 @@ public class UsrMemberController {
 //		따라서 위처럼 데이터를 모든 회원 정보를 출력하기 위해 위처럼 바꾸었다.
 		
 	}
+	
+	
+	//로그인 기능 만들기
+	@RequestMapping("/usr/member/doLogin")
+	@ResponseBody    //스프링 에서는 적어주기만 하면 자동으로 세션이 들어 온다
+	public ResultData doLogin(HttpSession httpSession, String loginId, String loginPw) {
+		
+		boolean isLogined = false;
+		
+		if(httpSession.getAttribute("loginedMemberId") != null ) {
+			// == loginMemberId에 이미 값이 들어 있다는 의미 == 로그인 되어 있는 상태
+			isLogined = true;
+		}
+		
+		if(isLogined) {
+			return ResultData.from("F-5", "이미 로그인 되어 있습니다.");
+		}
+		
+		
+		if(Ut.empty(loginId)) {
+			return ResultData.from("F-1", "loginId를 입력해 주세요");
+		}
+		
+		if(Ut.empty(loginPw)) {
+			return ResultData.from("F-2", "loginPw(을)를 입력해 주세요.");
+		}
+		
+		Member member = memberService.getMemberByLoginId(loginId);
+		
+		if(member == null) {
+			return ResultData.from("F-3", "존재하지 않는 loginId입니다");
+		}
+		
+		if(member.getLoginPw().equals(loginPw) == false) {
+			return ResultData.from("F-4", "비밀번호가 일치 하지 않습니다.");
+		}
+		
+		httpSession.setAttribute("loginedMemberId", member.getId());
+		
+		return ResultData.from("S-1", Ut.f("%s님 횐영 합니다.", member.getNickname()));
+		
+		
+	}
+	
+	
+	
 	
 	
 	
