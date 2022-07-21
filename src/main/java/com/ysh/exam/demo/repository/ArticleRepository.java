@@ -33,7 +33,7 @@ public interface ArticleRepository {
 	
 	//INSERT INTO article SET regDate = NOW(), updateDate = NOW(), title = ?, body = ?
 	//@Insert("INSERT INTO article SET regDate = NOW(), updateDate = NOW(), title = #{title}, `body` = #{body}")
-	public void writeArticle(@Param("title") String title,@Param("body") String body );
+	public void writeArticle(@Param("memberId") int memberId, @Param("title") String title,@Param("body") String body );
 	//insert의 경우는 return을 해주지 않는다(write는 들어가는 값이기 때문에 리턴값이 없다)
 	
 	//(SELECT * FROM article WHERE id = ?) 이러한 쿼리가 실행이 되야 기능이 동작한다

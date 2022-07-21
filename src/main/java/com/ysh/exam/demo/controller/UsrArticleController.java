@@ -2,6 +2,8 @@ package com.ysh.exam.demo.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,8 +25,22 @@ public class UsrArticleController {
 	
 	@RequestMapping("/usr/article/doAdd")  //Home에 만들어도 되지만 실무 에서는 따로 나누어 쓴다
 	@ResponseBody
-	public ResultData<Article> doAdd(String title, String body) {
+	public ResultData<Article> doAdd(HttpSession httpSession, String title, String body) {
 		//<Article>은 해도 안해도 큰 의미는 없다 : 사용할꺼면 정상적으로 실행이 될때 담고 있는 것에 맞춘다
+		
+		boolean isLogined = false;
+		int loginedMemberId = 0; //로그인을 하지 않을 것으로 가정
+		
+		if(httpSession.getAttribute("loginedMemberId") != null) {
+			isLogined = true;
+			loginedMemberId = (int)httpSession.getAttribute("loginedMemberId");
+		}
+		
+		if(isLogined == false) {
+			return ResultData.from("F-A", "로그인후 이용해 주세요");
+		}
+		
+		
 		
 		if(Ut.empty(title)) {
 			return ResultData.from("F-1", "title(을)를 입력해 주세요.");
@@ -39,8 +55,8 @@ public class UsrArticleController {
 		
 		//(int를 사용하지 않기 위해서 수정한 코드)
 		//ResultData가 품고 있는 보고서의 메인 데이터는 int이다. -> 형변환을 해주지 않아도 된다
-		ResultData<Integer> writeArticleRd = articleService.writeArticle(title, body);  //원래는 1만 주었다면 이제는 resultCode, msg도 준다.
-		int id = writeArticleRd.getData1();
+		ResultData<Integer> writeArticleRd = articleService.writeArticle(loginedMemberId, title, body);  //원래는 1만 주었다면 이제는 resultCode, msg도 준다.
+		int id = writeArticleRd.getData1();     //누가 작성 했는지 알기 위해 Session을 넣어준다
 		//현재 받은 데이터
 		//S-1
 		//4번 게시뭏 입니다.

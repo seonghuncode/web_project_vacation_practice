@@ -39,6 +39,7 @@ public class Article{    //파일명에 해당 하는 class는 무조건 public�
 	private int id;
 	private String regDate;
 	private String updateDate;
+	private int memberId;
 	private String title;
 	private String body;
 	
