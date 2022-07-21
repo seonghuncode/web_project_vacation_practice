@@ -46,7 +46,7 @@ public interface ArticleRepository {
 	
 	//(UPDATE article SET title = ?, body = ?, updateDate = NOW() WHERE id = ?)
 	//@Update("UPDATE article SET title = #{title}, `body` = #{body}, updateDate = NOW() WHERE id = #{id}")
-	public void modifyArticle(@Param("id" )int id,@Param("title") String title,@Param("body") String body);
+	public void modifyArticle(@Param("id") int id, @Param("title") String title, @Param("body") String body);
 
 	//(SELECT * FROM article ORDER BY id DESC)
 	//@Select("SELECT * FROM article ORDER BY id DESC")

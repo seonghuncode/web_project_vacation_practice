@@ -7,8 +7,7 @@
 		INSERT INTO article
 		SET regDate = NOW(),
 		updateDate = NOW(),
-		title =
-		#{title},
+		title = #{title},
 		`body` = #{body}
 	</insert> <!-- 나머지 쿼리문은 그대로 -->
 

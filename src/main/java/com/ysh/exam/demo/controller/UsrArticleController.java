@@ -23,7 +23,8 @@ public class UsrArticleController {
 	
 	@RequestMapping("/usr/article/doAdd")  //Home에 만들어도 되지만 실무 에서는 따로 나누어 쓴다
 	@ResponseBody
-	public ResultData doAdd(String title, String body) {
+	public ResultData<Article> doAdd(String title, String body) {
+		//<Article>은 해도 안해도 큰 의미는 없다
 		
 		if(Ut.empty(title)) {
 			return ResultData.from("F-1", "title(을)를 입력해 주세요.");
@@ -57,7 +58,9 @@ public class UsrArticleController {
 	
 	@RequestMapping("/usr/article/getArticles")
 	@ResponseBody
-	public ResultData getArticles(){
+	public ResultData<List<Article>> getArticles(){
+		//자바에서는 이러한 형태를 자세히 알려 주면 좋기 때문에 <List<Article>>사용
+		//안해주어도 상관은 없다
 		
 		List<Article> articles = articleService.getArticles();
 		
@@ -86,35 +89,36 @@ public class UsrArticleController {
 	
 	@RequestMapping("/usr/article/doDelete")
 	@ResponseBody
-	public String doDelete(int id) {
+	public ResultData<Integer> doDelete(int id) {
 		
 		Article article = articleService.getArticle(id); //getArticle에게 게시물을 찾아 오게 시킨다
 		
 		if(article == null) {
-			return  id + "번 게시물이 존재 하지 않습니다..";
+			return ResultData.from("F-1", Ut.f("%d번 게시물은 존재하지 않습니다.", id));
 		}
 		
 		articleService.deleteArticle(id);
 		
-		return  id + "번 게시물이 삭제 되었 습니다.";
+		return  ResultData.from("S-1", Ut.f("%d번 게시물을 삭제 했습니다.", id), id);
+		//마지막 id는 어떤 게시뭏을 삭제 하였는지
 	}
 
 
 	
 	@RequestMapping("/usr/article/doModify")
 	@ResponseBody
-	public String doModify(int id, String title, String body) {
+	public ResultData<Integer> doModify(int id, String title, String body) {
 		Article article = articleService.getArticle(id); 
 		//getArticle()의 경우 리포지터리 에서 가지고 있지만 컨트롤러 에서 바로 접근을 하면 안되는 구조이기 때문에 인접한 Service에게 요청을 해서 service를 통해 정보를 가지고  온다
 		
 		if(article == null) {
-			return id + "번 게시물이 존재 하지 않습니다.";
+			return ResultData.from("F-1", Ut.f("%d번 게시물은 존재 하지 않습니다.", id));
 		}
 		
 		articleService.modifyArticle(id, title, body);
 		
-		return id + "게시물을 수정 하였습니다.";
-		
+
+		return ResultData.from("S-1", Ut.f("%d번 게시물을 수정하였습니다.", id), id);
 	}
 
 
