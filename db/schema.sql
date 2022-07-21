@@ -45,6 +45,7 @@ SELECT * FROM article;
 SELECT LAST_INSERT_ID();
 
 
+#(테이블 순서는 중요도 순으로 웬만하면 맞추어 준다)
 #회원 테아블 생성 
 CREATE TABLE `member`(
 id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -111,9 +112,21 @@ email = 'test3@naver.com';
 SELECT * FROM `member`
 
 
+SELECT LAST_INSERT_ID();
 
 
 
+#게시물 테이블에 회원 정보 추가(로그인이 되어 있을 경우만 게시물 추가를 위해)
+ALTER TABLE article ADD COLUMN memberId INT(10) UNSIGNED NOT NULL AFTER `updateDate`;
+
+DESC article;
+SELECT * FROM article;
+
+
+#기존의 게시물은 memberid가 없었기 때문에 2번 으로 지정 해준다.
+UPDATE article
+SET memberId = 2
+WHERE memberId = 0;
 
 
 
