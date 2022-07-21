@@ -87,6 +87,28 @@ public class UsrMemberController {
 	}
 	
 	
+	@RequestMapping("/usr/member/doLogout")
+	@ResponseBody
+	public ResultData doLogout(HttpSession httpSession) {
+		boolean isLogined = false;
+		
+		if(httpSession.getAttribute("loginedMemberId") == null) {
+			isLogined = true;
+		}
+		
+		if(isLogined) {
+			return ResultData.from("S-1", "이미 로그아웃 상태 입니다.");
+		}
+		
+		httpSession.removeAttribute("loginedMemberId");
+		
+		return ResultData.from("S-2", "로그아웃 되었습니다.");
+		
+	}
+	
+	
+	
+	
 	//로그인 기능 만들기
 	@RequestMapping("/usr/member/doLogin")
 	@ResponseBody    //스프링 에서는 적어주기만 하면 자동으로 세션이 들어 온다
