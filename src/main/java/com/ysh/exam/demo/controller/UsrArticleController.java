@@ -30,7 +30,7 @@ public class UsrArticleController {
 			return ResultData.from("F-1", "title(을)를 입력해 주세요.");
 		}
 		if(Ut.empty(body)) {
-			return ResultData.from("F-1", "body(을)를 입력해 주세요.");
+			return ResultData.from("F-2", "body(을)를 입력해 주세요.");
 		}
 		
 		//게시물 id, title, body값을 저장 하는 과정
@@ -72,7 +72,7 @@ public class UsrArticleController {
 	
 	@RequestMapping("/usr/article/getArticle")
 	@ResponseBody
-	public ResultData getArticle(int id){  //Object는 article, String 모두의 상위 객체로 모든것을 의미 한다(String, article)을 return해 주어야 하기 때문에 object를 사용했다.
+	public ResultData<Article> getArticle(int id){  //Object는 article, String 모두의 상위 객체로 모든것을 의미 한다(String, article)을 return해 주어야 하기 때문에 object를 사용했다.
 		//메서드명은 getArticle이 이미있기 때문에 Action을 붙였다 중요X, 가장 상위 타입이 object이다
 		
 		Article article = articleService.getArticle(id);

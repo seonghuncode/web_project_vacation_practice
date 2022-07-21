@@ -29,7 +29,7 @@ public class UsrMemberController {
 	//==> 컨트롤러는 손님의 요구사항을 service에 전달을 해주어야 한다
 	@RequestMapping("/usr/member/doJoin")
 	@ResponseBody
-	public ResultData doJoin(String loginId, String loginPw, String name, String nickname, String cellphoneNo, String email) {
+	public ResultData<Member> doJoin(String loginId, String loginPw, String name, String nickname, String cellphoneNo, String email) {
 		
 		//trim() : 띄어쓰기 length = 0 : 공백
 		if(Ut.empty(loginId)) {
@@ -61,16 +61,16 @@ public class UsrMemberController {
 		//S-1
 		//회원가입이 완료 되었습니다.
 		//7
-		ResultData joinRd = memberService.join(loginId, loginPw, name, nickname, cellphoneNo, email);
-		
+		ResultData<Integer> joinRd = memberService.join(loginId, loginPw, name, nickname, cellphoneNo, email);
+		//Interger을 적는 이유는 아래서 joinRd앞에 형변환 (int)를 사용하지 않기 위해서
 		
 		if(joinRd.isFail()) {
-			return joinRd;
+			return (ResultData)joinRd;
 		}
 		
 		
 		//위의 joinRd에서 가지고 있는 데이터를 브라우저에게 보여 줄때 성공 여부랑, 메세지는 동일하게 하고 회원번호를 바꾸고 싶어 만든 코드 이
-		Member member = memberService.getMemberById((int) joinRd.getData1());
+		Member member = memberService.getMemberById(joinRd.getData1());
 		return ResultData.newData(joinRd, member);
 		
 		
