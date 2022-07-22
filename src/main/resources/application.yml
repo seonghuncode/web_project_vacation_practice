@@ -13,4 +13,8 @@ spring:
     password: ysh123   #비번
 mybatis:
   type-aliases-package: com.ysh.exam.demo.vo  #value object가 있는 주소를 적는다
-  
+custom:
+  logging:
+    dir: log
+    level: debug #이 세개는 로깅관련해서 사용한다(DB쿼리문등-콘솔에 나오는)
+    #로그에 과련된 공통 설정 파일(src/main.resources에 logback-spring.xml에서 사용)
