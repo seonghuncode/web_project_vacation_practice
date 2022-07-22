@@ -47,7 +47,7 @@ public class ResultData<DT> {
 
 	public static <DT> ResultData<DT> newData(ResultData joinRd, DT newData) {
 
-		return from(joinRd.getResultCode(), joinRd.msg, newData);
+		return from(joinRd.getResultCode(), joinRd.getMsg(), newData);
 	}
 	
 	

@@ -34,6 +34,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor // 객체를 생성할때 매개변수로 받을 수 있다. 즉 생성자를 3개 받아야 한다
+@NoArgsConstructor
 public class Article{    //파일명에 해당 하는 class는 무조건 public이 있어야 한다.
 	
 	private int id;
