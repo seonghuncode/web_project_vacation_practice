@@ -1,6 +1,10 @@
 server:
   port: 8080
 spring:
+  mvc:
+    view:
+      prefix: /WEB-INF/jsp/
+      suffix: .jsp
   datasource:
     #driver-class-name: com.mysql.cj.jdbc.Driver #아래의 JDBC가 mysql의존성 주입에 대한 부분, 127.0.01 ==> DB위치 , 포트번호, mysql의 데이터베이스 이름
     driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy #
