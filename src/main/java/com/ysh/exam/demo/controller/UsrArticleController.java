@@ -65,7 +65,7 @@ public class UsrArticleController {
 		
 		Article article = articleService.getArticle(id);
 		
-		return ResultData.newData(writeArticleRd, article);
+		return ResultData.newData(writeArticleRd, "article", article);
 		
 		
 	}
@@ -81,7 +81,7 @@ public class UsrArticleController {
 		List<Article> articles = articleService.getArticles();
 		
 		//저장된 게시물을 보여 주는 기능
-		return ResultData.from("S-1", "게시물 리스트 입니다.", articles);
+		return ResultData.from("S-1", "게시물 리스트 입니다.", "articles", articles);
 	}
 	
 	
@@ -97,7 +97,7 @@ public class UsrArticleController {
 			return ResultData.from("F-1", Ut.f("%d번 게시물이 존재하지 않습니다.", id)); //F-1은 개발자가 그냥 정해주면 된다
 		}
 		
-		return ResultData.from("S-1", Ut.f("%d번 게시물 입니다.", id), article);
+		return ResultData.from("S-1", Ut.f("%d번 게시물 입니다.", id), "article", article);
 		
 	}
 	
@@ -134,7 +134,7 @@ public class UsrArticleController {
 		
 		articleService.deleteArticle(id);
 		
-		return  ResultData.from("S-1", Ut.f("%d번 게시물을 삭제 했습니다.", id), id);
+		return  ResultData.from("S-1", Ut.f("%d번 게시물을 삭제 했습니다.", id), "id",  id);
 		//마지막 id는 어떤 게시뭏을 삭제 하였는지
 	}
 

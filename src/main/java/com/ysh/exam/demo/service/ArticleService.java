@@ -38,7 +38,7 @@ public class ArticleService {
 			articleRepository.writeArticle(memberId, title, body); //write의 경우 들어가는 글이기 때문애 return값이 없다 ==> 어떤 값이 들어왔는지 알기 위해서는 lastInsertId를 만들어 값을 받는다
 			int id = articleRepository.getLastInsertId();
 			
-			return ResultData.from("S-1", Ut.f("%d번 게시물이 생성 되었습니다.", id), id);
+			return ResultData.from("S-1", Ut.f("%d번 게시물이 생성 되었습니다.", id), "id", id);
 		}
 
 
@@ -68,7 +68,7 @@ public class ArticleService {
 			
 			Article article = getArticle(id);
 			
-			return ResultData.from("S-1", Ut.f("%d번 게시물이 수정 되었습니다.", id), article);
+			return ResultData.from("S-1", Ut.f("%d번 게시물이 수정 되었습니다.", id), "article", article);
 			
 		}
 
@@ -77,7 +77,7 @@ public class ArticleService {
 
 		public ResultData actorCanModify(int actorId, Article article) {
 			if(article == null) {
-				return ResultData.from("F-1", "권한이 없습니다.");
+				return ResultData.from("F-1", "게시물이 존재 하지 않습니다..");
 			}
 			if(article.getMemberId() != actorId) {
 				return ResultData.from("F-2", "수정 권한이 없습니다.");

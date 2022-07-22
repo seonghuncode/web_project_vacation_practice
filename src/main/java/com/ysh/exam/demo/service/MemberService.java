@@ -35,7 +35,7 @@ public class MemberService {
 		
 		int id = memberRepository.getLastInsertId();
 		
-		return ResultData.from("S-1", "회원가입이 완료 되었습니다.", id);
+		return ResultData.from("S-1", "회원가입이 완료 되었습니다.", "id", id);
 	}
 
 	private Member getMemberByNameAndEmail(String name, String email) {

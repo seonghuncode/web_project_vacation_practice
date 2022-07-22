@@ -77,7 +77,7 @@ public class UsrMemberController {
 		
 		//위의 joinRd에서 가지고 있는 데이터를 브라우저에게 보여 줄때 성공 여부랑, 메세지는 동일하게 하고 회원번호를 바꾸고 싶어 만든 코드 이
 		Member member = memberService.getMemberById(joinRd.getData1());
-		return ResultData.newData(joinRd, member);
+		return ResultData.newData(joinRd, "member", member);
 		
 		
 //		return joinRd; 
