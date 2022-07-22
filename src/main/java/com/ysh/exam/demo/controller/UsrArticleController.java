@@ -142,18 +142,54 @@ public class UsrArticleController {
 	
 	@RequestMapping("/usr/article/doModify")
 	@ResponseBody
-	public ResultData<Integer> doModify(int id, String title, String body) {
+	public ResultData<Article> doModify(HttpSession httpSession, int id, String title, String body) {
+	//ResultData<Article> : ResultData인데 내용물은 Article이다.	
+		
+		
+		//1. 로그인 여부를 체크 한다
+		boolean isLogined = false;
+		int loginedMemberId = 0;
+		
+		if(httpSession.getAttribute("loginedMemberId") != null) {
+			isLogined = true;
+			loginedMemberId = (int) httpSession.getAttribute("loginedMemberId");
+		}
+		
+		if(isLogined == false) {
+			return ResultData.from("F-A", "로그인 후 이용해 주세요.");
+		}
+		//-----------------------------------------------------------
+		
+		
+		//2. 게시물을 구해서 게시뭏이 없으면 오류 메시지 보여주기
 		Article article = articleService.getArticle(id); 
 		//getArticle()의 경우 리포지터리 에서 가지고 있지만 컨트롤러 에서 바로 접근을 하면 안되는 구조이기 때문에 인접한 Service에게 요청을 해서 service를 통해 정보를 가지고  온다
 		
 		if(article == null) {
 			return ResultData.from("F-1", Ut.f("%d번 게시물은 존재 하지 않습니다.", id));
 		}
+		//-------------------------------------------------------------
 		
-		articleService.modifyArticle(id, title, body);
 		
-
-		return ResultData.from("S-1", Ut.f("%d번 게시물을 수정하였습니다.", id), id);
+		//수정 권한은 서비스 한테 시켜도 된다.(컨트롤러는 인포데스크 직원으로 복잡한 것을 시키면 안되지만 이러한 간단한 것은 시켜도 된다)
+//		if(article.getMemberId() != loginedMemberId){
+//			return ResultData.from("F-2", "해당 게시물 수정 권한이 없습니다");
+//		}
+		
+		//위의 방법 대신 서비스에게 시키는 방법(logineMemberId가 article을 수정할 수 있는가에 대한 기능을 수행)
+		//3. 수정 요청을 넘기기 전에 logineMemberId가 article을 수정 가능한지 확인하는 기능 수행
+		ResultData actorCanModifyRd =  articleService.actorCanModify(loginedMemberId, article);
+		
+		
+		if(actorCanModifyRd.isFail()) { //실패하면 actorCanModifyRd보고서를 리턴해라
+			return actorCanModifyRd;
+		}
+		//----------------------------------------------------------------
+		
+		
+		//4. 위의 모든 조건을 만족하고 여기 까지 왔다면 수정이 가능하다.
+		return articleService.modifyArticle(id, title, body);
+		
 	}
 
 
