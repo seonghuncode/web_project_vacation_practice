@@ -22,17 +22,42 @@
 <!-- defer : script파일이 바로 실행되는 갓이 아니라 html코드가 모두 실행되고 나중에 실행되는 기능(script를 맨아래 적은 거랑 같다.) -->
 </head>
 <body>
-  <h1>${pageTitle} 페이지</h1>
 
   <header>
-    <a href="/">로고</a>
+    <div class="flex h-20 container mx-auto">
+      <a href="/" class="flex items-center px-3">
+        <span>로고</span>
+      </a>
 
-    <ul>
-      <li><a href="/">홈</a></li>
-      <li><a href="/usr/article/list">리스트</a></li>
-      <li><a href="/usr/member/login">로그인</a></li>
-    </ul>
+      <div class="flex-grow"></div>
+
+      <ul class="flex">
+       <li>
+        <a href="/" class="h-full flex px-3 items-center  hover:underline"> <!-- 부모의 높이를 가지고 온다 -->
+          <span>홈</span>
+        </a>
+       </li>
+       <li>
+        <a href="/usr/article/list" class="h-full flex px-3 items-center hover:underline">
+          <span>리스트</span>
+        </a>
+       </li>
+       <li>
+        <a href="/usr/member/login" class="h-full flex px-3 items-center hover:underline"> 
+          <span>로그인</span>
+        </a>
+        </li>
+      </ul>
+      
+    </div>  
+    
   </header>
 
+  <section class="mt-5">
+    <div class="container mx-auto px-3">
+        <h1>${pageTitle} 페이지</h1>
+    </div>
+  </section>
 <main>
+
 

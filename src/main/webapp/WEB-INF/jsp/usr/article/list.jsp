@@ -5,8 +5,10 @@
 <c:set var="pageTitle" value="게시물 리스트" />
 <%@ include file="../common/head.jspf"%>
 
-
-<table border="1">
+<section class="mt-5">
+   <div class="container mx-auto px-3">
+      <div class="table-box-type-1">
+          <table>
   <thead>
     <tr>
       <th>번호</th>
@@ -30,6 +32,11 @@
     </c:forEach>
   </tbody>
 </table>
+      </div>
+   </div>
+</section>
+
+
 
 <%@ include file="../common/foot.jspf"%>
 
