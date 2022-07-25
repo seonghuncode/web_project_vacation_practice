@@ -4,6 +4,9 @@
 <head>
 <meta charset="UTF-8">
 <title>메인</title>
+<link rel="stylesheet" href="/resource/common.css" />
+<script src="/resource/common.js" defer="defer"></script> 
+<!-- defer : script파일이 바로 실행되는 갓이 아니라 html코드가 모두 실행되고 나중에 실행되는 기능(script를 맨아래 적은 거랑 같다.) -->
 </head>
 <body>
   <h1>메인 페이지</h1>
