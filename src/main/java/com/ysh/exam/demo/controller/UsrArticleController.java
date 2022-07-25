@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -72,16 +73,18 @@ public class UsrArticleController {
 	
 	
 	
-	@RequestMapping("/usr/article/getArticles")
-	@ResponseBody
-	public ResultData<List<Article>> getArticles(){
+	@RequestMapping("/usr/article/list")
+	public String showList(Model model){
 		//자바에서는 이러한 형태를 자세히 알려 주면 좋기 때문에 <List<Article>>사용
 		//안해주어도 상관은 없다
 		
 		List<Article> articles = articleService.getArticles();
 		
-		//저장된 게시물을 보여 주는 기능
-		return ResultData.from("S-1", "게시물 리스트 입니다.", "articles", articles);
+		//jsp파일로 값을 보내주는 방법
+		model.addAttribute("articles", articles);
+		
+		
+		return "usr/article/list";
 	}
 	
 	
